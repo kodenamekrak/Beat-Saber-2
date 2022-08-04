@@ -1,0 +1,46 @@
+{
+  "sharedDir": "shared",
+  "dependenciesDir": "extern",
+  "info": {
+    "name": "Beat Saber 2",
+    "id": "BeatSaber-2",
+    "version": "0.1.0",
+    "url": null,
+    "additionalData": {
+      "overrideSoName": "libBeatSaber-2.so"
+    }
+  },
+  "dependencies": [
+    {
+      "id": "modloader",
+      "versionRange": "=1.2.3",
+      "additionalData": {}
+    },
+    {
+      "id": "beatsaber-hook",
+      "versionRange": "=3.8.5",
+      "additionalData": {}
+    },
+    {
+      "id": "codegen",
+      "versionRange": "=0.22.0",
+      "additionalData": {}
+    },
+    {
+      "id": "config-utils",
+      "versionRange": "=0.7.2",
+      "additionalData": {}
+    },
+    {
+      "id": "questui",
+      "versionRange": "=0.13.5",
+      "additionalData": {}
+    },
+    {
+      "id": "custom-types",
+      "versionRange": "=0.15.9",
+      "additionalData": {}
+    }
+  ],
+  "additionalData": {}
+}

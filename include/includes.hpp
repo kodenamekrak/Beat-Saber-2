@@ -1,0 +1,7 @@
+#include "main.hpp"
+#include "questui/shared/QuestUI.hpp"
+#include "questui/shared/BeatSaberUI.hpp"
+#include "config-utils/shared/config-utils.hpp"
+#include "ModConfig.hpp"
+#include "hooks.hpp"
+#include "HMUI/ViewController.hpp"
