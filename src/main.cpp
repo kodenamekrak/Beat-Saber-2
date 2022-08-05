@@ -65,7 +65,6 @@ void DidActivate(HMUI::ViewController *self, bool firstActivation, bool addedToH
             if(getModConfig().BeatCoinsCount.GetValue() >= 3000)
             {
                 getModConfig().BeatCoinsCount.SetValue(getModConfig().BeatCoinsCount.GetValue() - 3000);
-                getModConfig().HasBoughtMultiplayer.SetValue(true);
                 SettingsBeatCoinsCount->SetText(std::to_string(getModConfig().BeatCoinsCount.GetValue()));
                 getLogger().info("BeatCoins count after purchase is %i", getModConfig().BeatCoinsCount.GetValue());
             }
@@ -81,7 +80,7 @@ extern "C" void load() {
     il2cpp_functions::Init();
 
     QuestUI::Init();
-    QuestUI::Register::RegisterMainMenuModSettingsViewController(modInfo, DidActivate);
+    //QuestUI::Register::RegisterMainMenuModSettingsViewController(modInfo, DidActivate);
 
     il2cpp_functions::Init();
 

@@ -63,7 +63,7 @@ MAKE_AUTO_HOOK_MATCH(BeatCoinsResultsHider, &ResultsViewController::Init, void, 
         BeatCoinsImage->get_gameObject()->SetActive(false);
     }
     // get our score at the end of a song
-    Score = levelCompletionResults->modifiedScore;
+    Score = levelCompletionResults->modifiedScore + getModConfig().BeatCoinProgress.GetValue();
     auto beatmapDataTask = difficultyBeatmap->GetBeatmapDataBasicInfoAsync();
     auto beatmapData = beatmapDataTask->get_Result();
 
@@ -71,33 +71,31 @@ MAKE_AUTO_HOOK_MATCH(BeatCoinsResultsHider, &ResultsViewController::Init, void, 
     calculateMaxScore(notesCount);
 
     getLogger().info("Total Score was %f", Score);
-    // gives one beatcoin per 1,000,000 score
-    for (GainedBeatCoins = 0; Score >= 1000000; GainedBeatCoins++)
+    // gives one beatcoin per 800,000 score
+    for (GainedBeatCoins = 0; Score >= 800000; GainedBeatCoins++)
     {
-        Score = Score - 1000000;
+        Score = Score - 800000;
     }
     getModConfig().BeatCoinsCount.SetValue(getModConfig().BeatCoinsCount.GetValue() + GainedBeatCoins);
     getLogger().info("%i BeatCoins were gained with %f score remaining", GainedBeatCoins, Score);
+    getModConfig().BeatCoinProgress.SetValue(Score);
     GainedBeatCoins = 0;
 
     percentage = (Score / maxScore) * 100;
 
-    if (percentage >= 95.0) // extra beatcoins for accuracy, will probably require song to be atleast 1:30 at some point
-    {
-        GainedBeatCoins = 5;
-    }
-    else if (percentage >= 90.0)
+    if(percentage >= 98.0)
     {
         GainedBeatCoins = 3;
     }
-    else if (percentage >= 80.0)
+    else if (percentage >= 95.0) // extra beatcoins for accuracy, will probably require song to be atleast 1:30 at some point
     {
         GainedBeatCoins = 2;
     }
-    else
+    else if (percentage >= 90.0)
     {
         GainedBeatCoins = 1;
     }
+
     getModConfig().BeatCoinsCount.SetValue(getModConfig().BeatCoinsCount.GetValue() + GainedBeatCoins);
     getLogger().info("%i BeatCoins were gained with a percentage of %f", GainedBeatCoins, percentage);
 }
@@ -109,17 +107,5 @@ MAKE_AUTO_HOOK_MATCH(BeatCoinsMainMenuHider, &MainMenuViewController::DidActivat
     {
         BeatCoinsCount->get_gameObject()->SetActive(false);
         BeatCoinsImage->get_gameObject()->SetActive(false);
-    }
-
-    UnityEngine::UI::Button *multiplayerButton = self->multiplayerButton;
-    UnityEngine::GameObject *gameObject = multiplayerButton->get_gameObject();
-
-    if(!getModConfig().HasBoughtMultiplayer.GetValue())
-    {
-        gameObject->SetActive(false);
-    }
-    else
-    {
-        gameObject->SetActive(true);
     }
 }
