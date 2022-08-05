@@ -107,8 +107,19 @@ MAKE_AUTO_HOOK_MATCH(BeatCoinsMainMenuHider, &MainMenuViewController::DidActivat
     BeatCoinsMainMenuHider(self, firstActivation, addedToHierarchy, screenSystemEnabling);
     if (triggered)
     {
-        BeatCoinsMainMenuHider(self, firstActivation, addedToHierarchy, screenSystemEnabling);
         BeatCoinsCount->get_gameObject()->SetActive(false);
         BeatCoinsImage->get_gameObject()->SetActive(false);
+    }
+
+    UnityEngine::UI::Button *multiplayerButton = self->multiplayerButton;
+    UnityEngine::GameObject *gameObject = multiplayerButton->get_gameObject();
+
+    if(!getModConfig().HasBoughtMultiplayer.GetValue())
+    {
+        gameObject->SetActive(false);
+    }
+    else
+    {
+        gameObject->SetActive(true);
     }
 }

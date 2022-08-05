@@ -14,7 +14,6 @@ set(MOD_ID "BeatSaber-2")
 cmake_minimum_required(VERSION 3.21)
 project(${COMPILE_ID})
 add_compile_definitions(USE_CODEGEN_FIELDS)
-
 # export compile commands for significantly better intellisense
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
