@@ -4,7 +4,7 @@
   "info": {
     "name": "Beat Saber 2",
     "id": "BeatSaber-2",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "url": null,
     "additionalData": {
       "overrideSoName": "libBeatSaber-2.so"
