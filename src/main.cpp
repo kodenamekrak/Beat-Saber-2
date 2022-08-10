@@ -2,15 +2,9 @@
 #include "logos.hpp"
 #include "GlobalNamespace/MainMenuViewController.hpp"
 
-bool HasEnteredSettings;
-
 DEFINE_CONFIG(ModConfig);
 
 using namespace GlobalNamespace;
-
-HMUI::ImageView *SettingsBeatCoinsImage;
-UnityEngine::GameObject *SettingsBeatCoinsCanvas;
-TMPro::TextMeshProUGUI *SettingsBeatCoinsCount;
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
@@ -35,44 +29,6 @@ extern "C" void setup(ModInfo& info) {
 	
     getConfig().Load();
     getLogger().info("Completed setup!");
-}
-
-MAKE_AUTO_HOOK_MATCH(SettingsBeatCoinsMainMenuHider, &MainMenuViewController::DidActivate, void, MainMenuViewController *self, bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
-{
-    SettingsBeatCoinsMainMenuHider(self, firstActivation, addedToHierarchy, screenSystemEnabling);
-    if (HasEnteredSettings)
-    {
-        SettingsBeatCoinsCount->get_gameObject()->SetActive(false);
-        SettingsBeatCoinsImage->get_gameObject()->SetActive(false);
-    }
-}
-
-void DidActivate(HMUI::ViewController *self, bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
-{
-    if(firstActivation)
-    {
-        HasEnteredSettings = true;
-        UnityEngine::GameObject *container = QuestUI::BeatSaberUI::CreateScrollableSettingsContainer(self->get_transform());
-
-        SettingsBeatCoinsCanvas = QuestUI::BeatSaberUI::CreateCanvas();
-        SettingsBeatCoinsCanvas->get_transform()->set_position({2, 2.65, 4.3f});
-        SettingsBeatCoinsImage = QuestUI::BeatSaberUI::CreateImage(SettingsBeatCoinsCanvas->get_transform(), QuestUI::BeatSaberUI::Base64ToSprite(BeatCoinsLogo), {-35, 2}, {8, 8});
-        SettingsBeatCoinsCount = QuestUI::BeatSaberUI::CreateText(SettingsBeatCoinsCanvas->get_transform(), std::to_string(getModConfig().BeatCoinsCount.GetValue()));
-
-        UnityEngine::UI::Button *PurchaseMultiplayerButton = QuestUI::BeatSaberUI::CreateUIButton(container->get_transform(), "Purchase Multiplayer", [&]()
-        {
-            getLogger().info("Current BeatCoins count is %i", getModConfig().BeatCoinsCount.GetValue());
-            if(getModConfig().BeatCoinsCount.GetValue() >= 3000)
-            {
-                getModConfig().BeatCoinsCount.SetValue(getModConfig().BeatCoinsCount.GetValue() - 3000);
-                SettingsBeatCoinsCount->SetText(std::to_string(getModConfig().BeatCoinsCount.GetValue()));
-                getLogger().info("BeatCoins count after purchase is %i", getModConfig().BeatCoinsCount.GetValue());
-            }
-        });
-    }
-    SettingsBeatCoinsCount->get_gameObject()->SetActive(true);
-    SettingsBeatCoinsImage->get_gameObject()->SetActive(true);
-    SettingsBeatCoinsCount->SetText(std::to_string(getModConfig().BeatCoinsCount.GetValue()));
 }
 
 // Called later on in the game loading - a good time to install function hooks
