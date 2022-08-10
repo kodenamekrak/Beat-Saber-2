@@ -66,3 +66,11 @@ extern.cmake
 
 # QMOD Schema
 mod.json.schema
+build.ps1
+copy.ps1
+ndk-stack.ps1
+pull-tombstone.ps1
+.gitignore
+restart-game.ps1
+start-logging.ps1
+validate-modjson.ps1

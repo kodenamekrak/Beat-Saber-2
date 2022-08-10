@@ -91,7 +91,6 @@ MAKE_AUTO_HOOK_MATCH(BeatCoinsResultsHider, &ResultsViewController::Init, void, 
         }
         getModConfig().BeatCoinsCount.SetValue(getModConfig().BeatCoinsCount.GetValue() + GainedBeatCoins);
         getLogger().info("%i BeatCoins were gained with a percentage of %f", GainedBeatCoins, percentage);
-        
         // gives one beatcoin per 800,000 score
         combinedScore = levelCompletionResults->modifiedScore + getModConfig().BeatCoinProgress.GetValue();
         getLogger().info("Level score was %f, Config score is %i, Combined score is %f", userScore, getModConfig().BeatCoinProgress.GetValue(), combinedScore);
